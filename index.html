@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PINT coordinates semantic reasoning, world prediction, and action generation through shared Predictive Intent for robot manipulation.">
+  <title>PINT: A Unified Model with Shared Predictive Intent for Robot Manipulation</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/css/academicons.css">
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/videos.js"></script>
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="hero-shell">
+    <div class="hero-orb hero-orb-a" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb-b" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb-c" aria-hidden="true"></div>
+    <div class="hero-ribbon" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <h1><span class="title-accent">PINT:</span> A Unified Model with Shared<br class="desktop-break"> Predictive Intent for Robot Manipulation</h1>
+      <p class="authors">
+        <span>Xinyu Guo<sup>1,2,5,*</sup></span>,
+        <span>Chao Jing<sup>3,5,*</sup></span>,
+        <span>Li Yi<sup>4</sup></span>,
+        <span>Xingyu Chen<sup>5,&dagger;,&Dagger;</sup></span>,
+        <span>Zhengxing Wu<sup>1,&dagger;</sup></span>
+      </p>
+      <p class="affiliations">
+        <span><sup>1</sup>Institute of Automation, Chinese Academy of Sciences</span>
+        <span><sup>2</sup>University of Chinese Academy of Sciences</span><br>
+        <span><sup>3</sup>Fudan University</span>
+        <span><sup>4</sup>Tsinghua University</span>
+        <span><sup>5</sup>Zhongguancun Academy</span>
+      </p>
+      <p class="author-notes"><span><sup>*</sup>Equal contribution</span> <span><sup>&dagger;</sup>Corresponding authors</span> <span><sup>&Dagger;</sup>Project lead</span></p>
+      <p class="emails"><a href="mailto:guoxinyu2024@ia.ac.cn">guoxinyu2024@ia.ac.cn</a></p>
+      <nav class="links" aria-label="Project resources">
+        <!-- Replace this placeholder with the arXiv URL when the paper is public. -->
+        <a href="https://zgca-hmi-lab.github.io/PINT/" class="button" title="arXiv link coming soon; currently links to this project page"><i class="ai ai-arxiv" aria-hidden="true"></i> arXiv</a>
+        <a href="https://github.com/ZGCA-HMI-Lab/PINT" class="button" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code (Soon)</a>
+        <a href="#videos" class="button"><i class="fas fa-video" aria-hidden="true"></i> Videos</a>
+        <a href="#bibtex" class="button"><i class="fas fa-quote-right" aria-hidden="true"></i> BibTeX</a>
+      </nav>
+    </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section first-figure" aria-label="Overview of PINT">
+      <img class="main-figure" src="static/images/fig1.png" alt="PINT overview: shared Predictive Intent connects specialized experts, with two-stage training and simulation and real-world results." fetchpriority="high">
+      <p class="caption"><b>Multiple experts, one intent.</b> PINT coordinates semantic reasoning, world modeling, and action generation through shared chunk-level Predictive Intent while preserving expert-specific pathways.</p>
+    </section>
+
+    <section class="section abstract-section" id="abstract">
+      <h2>Abstract</h2>
+      <p>Generalist robot manipulation can benefit from pretrained vision-language models (VLMs) for semantic reasoning and video generation models (VGMs) for world modeling. However, existing unified models that directly fuse them through shared attention at multiple layers can make it harder to draw on their specialized capabilities. We introduce <b>PINT</b>, a unified model that coordinates semantic reasoning, world modeling, and action generation through a shared chunk-level <b>Predictive Intent</b> while preserving expert-specific pathways. PINT inserts learnable Intent Tokens into the VLM sequence to form this representation, conditioning both the VGM and an Action Expert (AE). It replaces only the VGM's prompt conditioning and retains the VGM at inference, where the AE reads its representations through one-way attention. Rather than prescribing what Predictive Intent should encode, PINT learns it jointly from the native prediction objectives of the VLM, VGM, and AE, which provide complementary views of the same upcoming task execution. Training uses two stages: Stage 1 freezes the VGM so that future video prediction shapes Predictive Intent with task-relevant future dynamics, while Stage 2 fixes the learned Intent and adapts the VGM and AE. Without embodied pretraining, PINT achieves strong in-distribution (ID) performance and substantially improves out-of-distribution (OOD) generalization, reaching <b>15.5%</b> on RoboTwin 2.0-Hard compared with 1.8% for Fast-WAM and 3.2% for StarVLA, and <b>79.5%</b> on LIBERO-Plus compared with 51.5% and 75.0%, respectively. Across five real-world bimanual tasks, PINT reaches <b>68% ID</b> and <b>24% OOD</b> success, compared with 35%/9% for pretrained Motus and 67%/35% for pretrained &pi;<sub>0.5</sub>.</p>
+    </section>
+
+    <section class="section" id="method">
+      <h2>Method Overview</h2>
+      <img class="main-figure" src="static/images/fig2.png" alt="PINT architecture showing the VLM Intent Tokens, VGM, Action Expert, and one-way attention design." loading="lazy">
+      <p class="caption"><b>PINT architecture and attention design.</b> Learnable Intent Tokens form Predictive Intent, which conditions both the VGM and AE. The AE receives layer-wise current-frame keys and values from the VGM. The autoregressive action-token suffix is used only during training.</p>
+    </section>
+
+    <section class="section" id="predictions">
+      <h2>Future Video Prediction</h2>
+      <img class="main-figure" src="static/images/fig3.png" alt="ID and OOD future video predictions from the VGM trained in Fast-WAM and PINT after Stage 1 and Stage 2." loading="lazy">
+      <p class="caption"><b>Future prediction across training stages.</b> Predictions from the VGM trained in Fast-WAM and PINT after Stage 1 and Stage 2 use the same ID and OOD inputs. Stage 1 learns Predictive Intent with the VGM frozen; Stage 2 adapts the VGM to refine generation.</p>
+    </section>
+
+    <section class="section" id="additional-predictions">
+      <h2>More Future Video Predictions</h2>
+      <h3>Closed-Loop Predictions</h3>
+      <figure class="prediction-panel">
+        <img class="main-figure" src="static/images/fig6-id.png" alt="Expanded ID closed-loop predictions for placing a container on a plate, comparing Fast-WAM, PINT Stage 1, and PINT Stage 2." loading="lazy">
+        <figcaption>ID</figcaption>
+      </figure>
+      <figure class="prediction-panel">
+        <img class="main-figure" src="static/images/fig6-ood.png" alt="Expanded OOD closed-loop predictions for placing a container on a plate, comparing Fast-WAM, PINT Stage 1, and PINT Stage 2." loading="lazy">
+        <figcaption>OOD</figcaption>
+      </figure>
+      <p class="caption">Expanded closed-loop examples for placing a container on a plate. Rows compare the VGM from our Fast-WAM reproduction with PINT after Stage 1 and Stage 2.</p>
+      <h3>Open-Loop Predictions</h3>
+      <img class="main-figure appendix-figure" src="static/images/fig7.png" alt="Open-loop predictions, part I: ID examples on the left and OOD examples on the right, with ground truth, Fast-WAM, PINT Stage 1, and PINT Stage 2 rows." loading="lazy">
+      <img class="main-figure appendix-figure" src="static/images/fig8.png" alt="Open-loop predictions, part II, using the same ground-truth and model comparison format." loading="lazy">
+      <p class="caption">Open-loop future-video predictions on RoboTwin 2.0 demonstrations. Left and right panels show ID and OOD examples. Rows show ground truth, the VGM trained in Fast-WAM, PINT after Stage 1, and PINT after Stage 2. Columns show the main-camera view at t+8, t+16, t+24, and t+32.</p>
+    </section>
+
+    <section class="section" id="experiments">
+      <h2>Experimental Overview</h2>
+      <img class="main-figure" src="static/images/fig4.png" alt="PINT evaluation settings on LIBERO, LIBERO-Plus, RoboTwin 2.0, and five real-world bimanual tasks." loading="lazy">
+      <p class="caption">We evaluate PINT on LIBERO, LIBERO-Plus, RoboTwin 2.0, and five real-world bimanual tasks under ID and OOD settings.</p>
+    </section>
+
+    <section class="section" id="videos">
+      <h2>Real-World Evaluation Videos</h2>
+      <p class="caption">Representative successful PINT executions under in-distribution (ID) and out-of-distribution (OOD) settings.</p>
+      <div class="video-task">
+        <h3>Turn On Light <span class="task-meta">(2&times;)</span></h3>
+        <div class="video-grid">
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/turn_on_light_id.jpg" aria-label="Turn On Light, ID, 2 times speed"><source src="static/videos/real/turn_on_light_id.mp4" type="video/mp4"></video><figcaption>ID</figcaption></figure>
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/turn_on_light_ood.jpg" aria-label="Turn On Light, OOD, 2 times speed"><source src="static/videos/real/turn_on_light_ood.mp4" type="video/mp4"></video><figcaption>OOD</figcaption></figure>
+        </div>
+      </div>
+      <div class="video-task">
+        <h3>Stack Cups <span class="task-meta">(5&times;)</span></h3>
+        <div class="video-grid">
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/stack_cups_id.jpg" aria-label="Stack Cups, ID, 5 times speed"><source src="static/videos/real/stack_cups_id.mp4" type="video/mp4"></video><figcaption>ID</figcaption></figure>
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/stack_cups_ood.jpg" aria-label="Stack Cups, OOD, 5 times speed"><source src="static/videos/real/stack_cups_ood.mp4" type="video/mp4"></video><figcaption>OOD</figcaption></figure>
+        </div>
+      </div>
+      <div class="video-task">
+        <h3>Place Pens <span class="task-meta">(5&times;)</span></h3>
+        <div class="video-grid">
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/place_pens_id.jpg" aria-label="Place Pens, ID, 5 times speed"><source src="static/videos/real/place_pens_id.mp4" type="video/mp4"></video><figcaption>ID</figcaption></figure>
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/place_pens_ood.jpg" aria-label="Place Pens, OOD, 5 times speed"><source src="static/videos/real/place_pens_ood.mp4" type="video/mp4"></video><figcaption>OOD</figcaption></figure>
+        </div>
+      </div>
+      <div class="video-task">
+        <h3>Store Block <span class="task-meta">(5&times;)</span></h3>
+        <div class="video-grid">
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/store_block_id.jpg" aria-label="Store Block, ID, 5 times speed"><source src="static/videos/real/store_block_id.mp4" type="video/mp4"></video><figcaption>ID</figcaption></figure>
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/store_block_ood.jpg" aria-label="Store Block, OOD, 5 times speed"><source src="static/videos/real/store_block_ood.mp4" type="video/mp4"></video><figcaption>OOD</figcaption></figure>
+        </div>
+      </div>
+      <div class="video-task">
+        <h3>Fold Towel <span class="task-meta">(7&times;)</span></h3>
+        <div class="video-grid">
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/fold_towel_id.jpg" aria-label="Fold Towel, ID, 7 times speed"><source src="static/videos/real/fold_towel_id.mp4" type="video/mp4"></video><figcaption>ID</figcaption></figure>
+          <figure class="video-card"><video muted loop playsinline controls preload="none" width="1280" height="720" poster="static/videos/real/fold_towel_ood.jpg" aria-label="Fold Towel, OOD, 7 times speed"><source src="static/videos/real/fold_towel_ood.mp4" type="video/mp4"></video><figcaption>OOD</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <h2>Simulation Results</h2>
+      <h3>LIBERO and LIBERO-Plus</h3>
+      <img class="result-figure" src="static/images/table-libero.png" alt="Paper Table 1: full LIBERO and LIBERO-Plus results. PINT achieves 98.0% and 79.5%; PINT-VA achieves 98.2% and 81.0%." loading="lazy">
+      <h3>RoboTwin 2.0</h3>
+      <img class="result-figure" src="static/images/table-robotwin.png" alt="Paper Table 2: RoboTwin 2.0 Easy and Hard results. PINT achieves 68.6% and 15.5%; PINT-VA achieves 71.9% and 18.1%." loading="lazy">
+    </section>
+
+    <section class="section" id="real-world">
+      <h2>Real-World Results</h2>
+      <img class="result-figure" src="static/images/table-real-world.png" alt="Paper Table 3: real-world results on Turn On Light, Stack Cups, Place Pens, Store Block, and Fold Towel. PINT averages 68% ID and 24% OOD success." loading="lazy">
+    </section>
+
+    <section class="section" id="ablations">
+      <h2>Ablation Study</h2>
+      <img class="result-figure" src="static/images/table-ablation.png" alt="Paper Table 4: ablations of Intent design, supervision and expert interaction, two-stage training, and Intent capacity." loading="lazy">
+    </section>
+
+    <section class="section" id="intent">
+      <h2>Visualizing Predictive Intent</h2>
+      <img class="main-figure intent-figure" src="static/images/fig5.png" alt="Action chunks projected with t-SNE, colored by a PCA projection of their corresponding Predictive Intent, with representative manipulation behaviors." loading="lazy">
+      <p class="caption">Ground-truth action chunks are projected into a two-dimensional t-SNE space. Each point is colored using a three-dimensional PCA projection of its corresponding Predictive Intent. Highlighted regions show representative manipulation behaviors.</p>
+    </section>
+    <section class="section" id="bibtex">
+      <h2>BibTeX</h2>
+      <pre aria-label="BibTeX citation placeholder"><code></code></pre>
+    </section>
+  </main>
+  <footer><a href="https://github.com/ZGCA-HMI-Lab/PINT">PINT</a> &middot; Code will be released soon.</footer>
+</body>
+</html>

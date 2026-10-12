@@ -1,0 +1,198 @@
+/* Adapted from the authors' PriorVLA project page. */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #252525;
+  background: linear-gradient(180deg, #fcfcfd 0%, #ffffff 100%);
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+.container { max-width: 1128px; margin: 0 auto; padding: 0 24px; }
+.hero { padding: 14px 18px 20px; }
+.hero-shell {
+  position: relative;
+  overflow: hidden;
+  box-sizing: content-box;
+  max-width: 1360px;
+  margin: 0 auto;
+  border-radius: 26px;
+  border: 1px solid rgba(15, 23, 42, .07);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(37, 99, 235, .055), rgba(255, 255, 255, 0) 24%),
+    radial-gradient(circle at 88% 18%, rgba(249, 115, 22, .050), rgba(255, 255, 255, 0) 25%),
+    linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+  box-shadow:
+    0 12px 34px rgba(15, 23, 42, .065),
+    inset 0 1px 0 rgba(255, 255, 255, .75);
+}
+.hero-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(58px);
+  opacity: .22;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-orb-a {
+  width: 300px;
+  height: 300px;
+  left: -80px;
+  top: -70px;
+  background: radial-gradient(circle, rgba(37, 99, 235, .20) 0%, rgba(37, 99, 235, .06) 48%, rgba(37, 99, 235, 0) 72%);
+  animation: floatA 18s ease-in-out infinite;
+}
+.hero-orb-b {
+  width: 320px;
+  height: 320px;
+  right: -95px;
+  top: -75px;
+  background: radial-gradient(circle, rgba(249, 115, 22, .18) 0%, rgba(249, 115, 22, .05) 48%, rgba(249, 115, 22, 0) 72%);
+  animation: floatB 22s ease-in-out infinite;
+}
+.hero-orb-c {
+  width: 260px;
+  height: 260px;
+  left: 45%;
+  bottom: -70px;
+  background: radial-gradient(circle, rgba(20, 184, 166, .12) 0%, rgba(20, 184, 166, .04) 48%, rgba(20, 184, 166, 0) 72%);
+  animation: floatC 24s ease-in-out infinite;
+}
+.hero-ribbon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 78px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .42;
+}
+.hero-ribbon::before,
+.hero-ribbon::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  border-radius: 50%;
+}
+.hero-ribbon::before {
+  height: 74px;
+  bottom: -38px;
+  background: linear-gradient(90deg,
+    rgba(37, 99, 235, .10),
+    rgba(20, 184, 166, .08),
+    rgba(255, 255, 255, 0),
+    rgba(249, 115, 22, .10));
+  transform: skewY(-2deg);
+  animation: ribbonWave1 26s ease-in-out infinite;
+}
+.hero-ribbon::after {
+  height: 62px;
+  bottom: -46px;
+  background: linear-gradient(90deg,
+    rgba(249, 115, 22, .09),
+    rgba(255, 255, 255, 0),
+    rgba(37, 99, 235, .08));
+  transform: skewY(2deg);
+  animation: ribbonWave2 30s ease-in-out infinite;
+}
+.hero-inner { position: relative; z-index: 2; text-align: center; padding-top: 54px; padding-bottom: 54px; }
+@keyframes floatA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(14px, 8px) scale(1.025); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-12px, 10px) scale(1.025); }
+}
+@keyframes floatC {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(8px, -8px) scale(1.02); }
+}
+@keyframes ribbonWave1 {
+  0%, 100% { transform: translateX(0) skewY(-2deg); }
+  50% { transform: translateX(10px) skewY(-1deg); }
+}
+@keyframes ribbonWave2 {
+  0%, 100% { transform: translateX(0) skewY(2deg); }
+  50% { transform: translateX(-10px) skewY(3deg); }
+}
+h1 { font-size: 48px; line-height: 1.12; margin: 0 auto 28px; font-weight: 740; max-width: 1180px; color: #252525; text-wrap: balance; }
+.title-accent { color: #ec5c03; }
+.authors { font-size: 20px; line-height: 1.55; margin: 0 auto 8px; color: #222; max-width: 1000px; }
+.authors span { display: inline-block; }
+.authors sup { font-size: 65%; color: #333; margin-left: 1px; }
+.affiliations { font-size: 17px; line-height: 1.45; margin: 6px auto; color: #4b5563; max-width: 980px; }
+.affiliations span { display: inline-block; margin: 0 6px; }
+.author-notes { font-size: 13px; margin: 14px auto 0; color: #5b6472; }
+.author-notes span { display: inline-block; margin: 0 6px; }
+.emails { font-size: 15px; line-height: 1.6; margin: 8px auto 20px; color: #5b6472; }
+.emails a { color: inherit; text-decoration: none; }
+.emails a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.links { display: flex; justify-content: center; flex-wrap: wrap; gap: 11px; margin-top: 18px; }
+.button {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 36px; padding: 8px 19px; border-radius: 999px;
+  background: rgba(31, 41, 55, .94); color: #fff; text-decoration: none;
+  border: 0;
+  font-size: 16px; line-height: 1.25; font-weight: 400;
+  box-shadow: 0 5px 13px rgba(15, 23, 42, .10);
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+.button i, .button svg { width: 1em; margin-right: 7px; }
+.button:hover { transform: translateY(-1px); opacity: .95; box-shadow: 0 7px 16px rgba(15, 23, 42, .13); }
+a:focus-visible { outline: 3px solid #ec5c03; outline-offset: 5px; }
+.section { padding: 34px 0; text-align: center; scroll-margin-top: 24px; }
+.first-figure { padding-top: 12px; }
+.section h2 { font-size: 32px; margin: 0 0 20px; font-weight: 650; line-height: 1.25; }
+.section h3 { font-size: 22px; margin: 30px 0 14px; font-weight: 600; }
+.section p { text-align: left; font-size: 17px; max-width: 920px; margin: 12px auto; }
+.abstract-section h2 { margin-bottom: 24px; }
+.abstract-section p { max-width: 820px; font-size: 18px; line-height: 1.65; text-align: justify; }
+.main-figure { display: block; width: 100%; max-width: 980px; height: auto; margin: 0 auto; }
+.result-figure { display: block; width: 100%; max-width: 960px; height: auto; margin: 0 auto 12px; border: 1px solid #e8e8e8; border-radius: 8px; }
+.intent-figure { max-width: 800px; }
+.prediction-panel { margin: 24px auto; }
+.prediction-panel figcaption { margin-top: 8px; font-size: 16px; font-weight: 600; }
+.appendix-figure { margin-top: 24px; }
+#bibtex pre { max-width: 980px; min-height: 100px; margin: 0 auto; padding: 18px; text-align: left; background: #f6f6f6; border: 1px solid #e6e6e6; border-radius: 8px; overflow-x: auto; }
+.video-task { margin: 34px auto 0; max-width: 980px; }
+.video-task h3 { margin-top: 10px; margin-bottom: 16px; }
+.task-meta { font-size: .78em; font-weight: 500; color: #6b7280; }
+.video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.video-card { margin: 0; min-width: 0; }
+.video-card video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 8px; background: #111; }
+.video-card figcaption { margin-top: 9px; font-size: 15px; font-weight: 600; color: #374151; }
+.section .caption { color: #666; font-size: 16px; line-height: 1.55; max-width: 980px; margin: 12px auto 0; }
+footer { text-align: center; color: #777; padding: 30px 24px 50px; font-size: 14px; }
+footer a { color: #555; text-underline-offset: 3px; }
+@media (max-width: 800px) {
+  .hero { padding: 10px 10px 22px; }
+  .hero-shell { border-radius: 22px; }
+  .hero-inner { padding-top: 38px; padding-bottom: 46px; }
+  h1 { font-size: 34px; }
+  .desktop-break { display: none; }
+  .authors { font-size: 17px; }
+  .affiliations { font-size: 15px; }
+  .section h2 { font-size: 28px; }
+  .abstract-section p { text-align: left; font-size: 17px; }
+  .video-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 420px) {
+  .container { padding: 0 18px; }
+  h1 { font-size: 30px; margin-bottom: 24px; }
+  .hero-inner { padding-top: 26px; padding-bottom: 40px; }
+  .authors { font-size: 16px; }
+  .affiliations { font-size: 14px; line-height: 1.45; }
+  .author-notes { font-size: 12px; }
+  .links { gap: 10px; margin-top: 18px; }
+  .button { padding-right: 14px; padding-left: 14px; }
+  .section { padding: 26px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .button { transition: none; }
+  .hero-orb, .hero-ribbon::before, .hero-ribbon::after { animation: none; }
+}
